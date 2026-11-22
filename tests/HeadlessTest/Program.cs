@@ -38,11 +38,23 @@ public static class Program
         var cliArgs = new List<string> { "-iwad", iwad, "-skill", "3" };
         var warp = false;
 
-        foreach (var extra in args[1..])
+        for (var a = 1; a < args.Length; a++)
         {
+            var extra = args[a];
+            if (extra == "--dump")
+            {
+                a++;
+                continue;
+            }
+
             if (extra == "--warp")
             {
                 warp = true;
+                continue;
+            }
+
+            if (extra is "--hires" or "--load")
+            {
                 continue;
             }
 
@@ -66,7 +78,7 @@ public static class Program
 
         var config = new Config
         {
-            video_highresolution = false,
+            video_highresolution = args.Contains("--hires"),
             video_fpsscale = 1,
             mouse_sensitivity = 8,
         };
@@ -151,6 +163,27 @@ public static class Program
         {
             doom.Update();
             video.Render(doom, Fixed.One);
+        }
+
+        var dumpArg = Array.IndexOf(args, "--dump");
+        if (dumpArg >= 0 && dumpArg + 1 < args.Length)
+        {
+            var outPath = Path.GetFullPath(args[dumpArg + 1]);
+            video.Consume((buffer, w, h, v) =>
+            {
+                using var stream = File.Create(outPath);
+                using var writer = new BinaryWriter(stream);
+                var header = System.Text.Encoding.ASCII.GetBytes($"P6\n{w} {h}\n255\n");
+                writer.Write(header);
+                for (var i = 0; i < w * h; i++)
+                {
+                    writer.Write(buffer[i * 4 + 0]);
+                    writer.Write(buffer[i * 4 + 1]);
+                    writer.Write(buffer[i * 4 + 2]);
+                }
+
+                Console.WriteLine($"dumped {w}x{h} to {outPath}");
+            });
         }
 
         var savePath = Path.Combine(saveDir, "doomsav0.dsg");

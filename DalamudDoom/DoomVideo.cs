@@ -38,7 +38,29 @@ public sealed class DoomVideo : IVideo
         lock (this.gate)
         {
             this.renderer.Render(doom, this.back, frameFrac);
-            (this.back, this.front) = (this.front, this.back);
+
+            // The engine framebuffer is column-major (index = x * height + y), the way the
+            // original Doom screen buffer was laid out. Transpose it into a plain row-major
+            // RGBA image so it can be uploaded straight to a texture.
+            var width = this.renderer.Width;
+            var height = this.renderer.Height;
+            var src = this.back;
+            var dst = this.front;
+
+            for (var x = 0; x < width; x++)
+            {
+                var column = x * height;
+                for (var y = 0; y < height; y++)
+                {
+                    var s = (column + y) * 4;
+                    var d = (y * width + x) * 4;
+                    dst[d] = src[s];
+                    dst[d + 1] = src[s + 1];
+                    dst[d + 2] = src[s + 2];
+                    dst[d + 3] = src[s + 3];
+                }
+            }
+
             this.version++;
         }
     }

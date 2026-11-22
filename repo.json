@@ -5,9 +5,15 @@
     "InternalName": "DalamudDoom",
     "Punchline": "Rip and tear. Between pulls.",
     "Description": "A Doom engine embedded in a Dalamud window. Runs the classic engine in-process via ManagedDoom, renders into an ImGui texture, and autosaves when you close the window. Requires your own DOOM.WAD / DOOM2.WAD. Vanilla-format WADs only.",
-    "Tags": [ "doom", "fun", "minigame" ],
-    "CategoryTags": [ "other" ],
-    "AssemblyVersion": "0.1.0.0",
+    "Tags": [
+      "doom",
+      "fun",
+      "minigame"
+    ],
+    "CategoryTags": [
+      "other"
+    ],
+    "AssemblyVersion": "0.1.0.1",
     "DalamudApiLevel": 15,
     "ApplicableVersion": "any",
     "RepoUrl": "https://github.com/PyroXFire/doom-dalamud",
@@ -16,8 +22,8 @@
     "LoadPriority": 0,
     "DownloadCount": 0,
     "LastUpdate": 0,
-    "DownloadLinkInstall": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.0/DalamudDoom.zip",
-    "DownloadLinkUpdate": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.0/DalamudDoom.zip",
+    "DownloadLinkInstall": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.1/DalamudDoom.zip",
+    "DownloadLinkUpdate": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.1/DalamudDoom.zip",
     "AcceptsFeedback": false
   }
 ]
