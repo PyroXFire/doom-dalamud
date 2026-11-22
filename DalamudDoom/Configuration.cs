@@ -19,7 +19,13 @@ public sealed class Configuration : IPluginConfiguration
     public string SaveDirectory { get; set; } = string.Empty;
 
     /// <summary>Render at 640x400 instead of 320x200. Applies on next engine start.</summary>
-    public bool HighResolution { get; set; }
+    public bool HighResolution { get; set; } = true;
+
+    /// <summary>Read the game's own gamepad state and map it onto Doom controls.</summary>
+    public bool ControllerEnabled { get; set; } = true;
+
+    /// <summary>Stick deadzone, 0..0.5.</summary>
+    public float ControllerDeadzone { get; set; } = 0.15f;
 
     /// <summary>Write an autosave when the window is closed or the plugin unloads.</summary>
     public bool SaveOnExit { get; set; } = true;

@@ -21,7 +21,7 @@ public sealed class Plugin : IDalamudPlugin
     public Plugin(
         IDalamudPluginInterface pluginInterface,
         ITextureProvider textures,
-        IKeyState keyState,
+        IGamepadState gamepadState,
         ICommandManager commands,
         IPluginLog log)
     {
@@ -43,7 +43,7 @@ public sealed class Plugin : IDalamudPlugin
             this.configuration,
             this.host,
             this.input,
-            keyState,
+            gamepadState,
             textures,
             this.SaveConfiguration,
             this.StartEngine);

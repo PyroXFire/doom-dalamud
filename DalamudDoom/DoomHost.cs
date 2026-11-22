@@ -110,7 +110,9 @@ public sealed class DoomHost : IDisposable
                 config,
                 key => this.currentKeys[(int)key],
                 button => this.input.IsMouseButtonPressed(button),
-                () => this.input.TakeMouseDelta());
+                () => this.input.TakeMouseDelta(),
+                () => this.input.MoveAxes(),
+                () => this.input.TurnAxis());
 
             doom = new Doom(args, config, content, video, NullSound.GetInstance(), NullMusic.GetInstance(), userInput);
 

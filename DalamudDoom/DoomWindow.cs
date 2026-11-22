@@ -17,7 +17,7 @@ public sealed class DoomWindow
     private readonly Configuration configuration;
     private readonly DoomHost host;
     private readonly InputBridge input;
-    private readonly IKeyState keyState;
+    private readonly IGamepadState gamepad;
     private readonly ITextureProvider textures;
     private readonly Action saveConfiguration;
     private readonly Action startEngine;
@@ -34,7 +34,7 @@ public sealed class DoomWindow
         Configuration configuration,
         DoomHost host,
         InputBridge input,
-        IKeyState keyState,
+        IGamepadState gamepad,
         ITextureProvider textures,
         Action saveConfiguration,
         Action startEngine)
@@ -42,7 +42,7 @@ public sealed class DoomWindow
         this.configuration = configuration;
         this.host = host;
         this.input = input;
-        this.keyState = keyState;
+        this.gamepad = gamepad;
         this.textures = textures;
         this.saveConfiguration = saveConfiguration;
         this.startEngine = startEngine;
@@ -124,7 +124,12 @@ public sealed class DoomWindow
         var focused = ImGui.IsWindowFocused(ImGuiFocusedFlags.None);
         var mouseLook = hovered && this.configuration.MouseLook;
         var io = ImGui.GetIO();
-        this.input.Capture(this.keyState, mouseLook ? io.MouseDelta : Vector2.Zero, mouseLook);
+        this.input.Capture(
+            this.gamepad,
+            mouseLook ? io.MouseDelta : Vector2.Zero,
+            mouseLook,
+            this.configuration.ControllerEnabled,
+            this.configuration.ControllerDeadzone);
 
         if (hovered || focused)
         {
@@ -279,9 +284,23 @@ public sealed class DoomWindow
         var changed = false;
 
         var highRes = this.configuration.HighResolution;
-        if (ImGui.Checkbox("640x400 (otherwise 320x200)", ref highRes))
+        if (ImGui.Checkbox("640x400 render (otherwise 320x200, applies on next engine start)", ref highRes))
         {
             this.configuration.HighResolution = highRes;
+            changed = true;
+        }
+
+        var controller = this.configuration.ControllerEnabled;
+        if (ImGui.Checkbox("Controller support (uses the game's pad state)", ref controller))
+        {
+            this.configuration.ControllerEnabled = controller;
+            changed = true;
+        }
+
+        var deadzone = (int)MathF.Round(this.configuration.ControllerDeadzone * 100f);
+        if (ImGui.SliderInt("Controller deadzone %", ref deadzone, 0, 50))
+        {
+            this.configuration.ControllerDeadzone = deadzone / 100f;
             changed = true;
         }
 

@@ -29,6 +29,8 @@ namespace ManagedDoom.UserInput
         private readonly Func<DoomKey, bool> isKeyPressed;
         private readonly Func<DoomMouseButton, bool> isMouseButtonPressed;
         private readonly Func<Vector2> takeMouseDelta;
+        private readonly Func<Vector2> takeMoveAxes;
+        private readonly Func<float> takeTurnAxis;
 
         private bool mouseGrabbed;
         private int turnHeld;
@@ -40,12 +42,16 @@ namespace ManagedDoom.UserInput
             Func<DoomKey, bool> isKeyPressed,
             Func<DoomMouseButton, bool> isMouseButtonPressed,
             Func<Vector2> takeMouseDelta,
+            Func<Vector2> takeMoveAxes = null,
+            Func<float> takeTurnAxis = null,
             bool useMouse = true)
         {
             this.config = config;
             this.isKeyPressed = isKeyPressed;
             this.isMouseButtonPressed = isMouseButtonPressed;
             this.takeMouseDelta = takeMouseDelta;
+            this.takeMoveAxes = takeMoveAxes;
+            this.takeTurnAxis = takeTurnAxis;
             this.useMouse = useMouse;
 
             this.turnHeld = 0;
@@ -191,6 +197,21 @@ namespace ManagedDoom.UserInput
                 {
                     cmd.AngleTurn -= (short)(mx * 0x8);
                 }
+            }
+
+            // Analog stick movement and turning (gamepad). Keys stay additive on top.
+            if (takeMoveAxes != null)
+            {
+                var axes = takeMoveAxes();
+                forward += (int)MathF.Round(axes.Y * PlayerBehavior.MaxMove);
+                side += (int)MathF.Round(axes.X * PlayerBehavior.MaxMove);
+            }
+
+            if (takeTurnAxis != null)
+            {
+                var turnAmount = (int)MathF.Round(takeTurnAxis() * 640.0F);
+                turnAmount = Math.Clamp(turnAmount, -1280, 1280);
+                cmd.AngleTurn += (short)turnAmount;
             }
 
             if (forward > PlayerBehavior.MaxMove)
