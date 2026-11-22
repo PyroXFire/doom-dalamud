@@ -28,6 +28,7 @@ public sealed class DoomWindow
     private string wadCandidates = string.Empty;
     private List<string>? candidates;
     private bool showSettings;
+    private bool autoDetected;
 
     public DoomWindow(
         Configuration configuration,
@@ -221,6 +222,19 @@ public sealed class DoomWindow
             this.saveConfiguration();
         }
 
+        if (!this.autoDetected)
+        {
+            // First open: look for Steam copies and pick a sensible default so the plugin is
+            // usable without hunting for the WAD path by hand.
+            this.autoDetected = true;
+            this.candidates = WadFinder.Find();
+            if (string.IsNullOrWhiteSpace(this.configuration.IwadPath) && this.candidates.Count > 0)
+            {
+                this.configuration.IwadPath = this.candidates[0];
+                this.saveConfiguration();
+            }
+        }
+
         if (ImGui.Button("Search this machine for WADs"))
         {
             this.candidates = WadFinder.Find();
@@ -235,7 +249,8 @@ public sealed class DoomWindow
 
             foreach (var candidate in this.candidates)
             {
-                if (ImGui.Selectable(candidate))
+                var label = (WadFinder.IsIwad(candidate) ? "[IWAD] " : "[PWAD] ") + candidate;
+                if (ImGui.Selectable(label))
                 {
                     this.configuration.IwadPath = candidate;
                     this.saveConfiguration();
@@ -309,51 +324,5 @@ public sealed class DoomWindow
         {
             this.saveConfiguration();
         }
-    }
-}
-
-internal static class WadFinder
-{
-    private static readonly string[] SubDirectories =
-    {
-        "Games", "Downloads", "Documents", "Desktop", "doom", "Doom", "wads",
-    };
-
-    public static List<string> Find()
-    {
-        var results = new List<string>();
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
-        var roots = new List<string> { home };
-        foreach (var sub in SubDirectories)
-        {
-            roots.Add(Path.Combine(home, sub));
-        }
-
-        foreach (var root in roots)
-        {
-            if (!Directory.Exists(root))
-            {
-                continue;
-            }
-
-            try
-            {
-                foreach (var file in Directory.EnumerateFiles(root, "*.wad", SearchOption.AllDirectories))
-                {
-                    results.Add(file);
-                    if (results.Count >= 40)
-                    {
-                        return results;
-                    }
-                }
-            }
-            catch
-            {
-                // Unreadable directory - skip it.
-            }
-        }
-
-        return results;
     }
 }

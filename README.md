@@ -30,7 +30,9 @@ ImGui texture in the game's own D3D11 device.
 1. `/xlsettings` → Experimental → Custom Plugin Repositories
 2. Add: `https://raw.githubusercontent.com/PyroXFire/doom-dalamud/main/repo.json`
 3. `/xlplugins` → search **Doom in FFXIV** → install
-4. `/doom` to open. Point it at your IWAD inside the window.
+4. `/doom` to open. It scans Steam libraries and common folders for WADs on first run and
+   pre-selects `base/doom2/DOOM2.WAD`, falling back to `base/DOOM.WAD` or Freedoom if that is all
+   you have.
 
 ## Install (manual, for development)
 

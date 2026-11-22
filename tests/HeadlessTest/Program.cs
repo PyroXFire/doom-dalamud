@@ -18,6 +18,18 @@ public static class Program
 {
     public static int Main(string[] args)
     {
+        if (args.Length > 0 && args[0] == "--find")
+        {
+            var found = WadFinder.Find();
+            Console.WriteLine($"wad finder found {found.Count}:");
+            foreach (var wad in found)
+            {
+                Console.WriteLine($"  {(WadFinder.IsIwad(wad) ? "IWAD" : "PWAD")}  {wad}");
+            }
+
+            return found.Count > 0 && WadFinder.IsIwad(found[0]) ? 0 : 1;
+        }
+
         if (args.Length < 1)
         {
             Console.Error.WriteLine("usage: HeadlessTest <iwad> [pwad]");

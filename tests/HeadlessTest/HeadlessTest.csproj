@@ -10,5 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\ManagedDoom\ManagedDoom.csproj" />
     <Compile Include="..\..\DalamudDoom\DoomVideo.cs" Link="DoomVideo.cs" />
+    <Compile Include="..\..\DalamudDoom\WadFinder.cs" Link="WadFinder.cs" />
   </ItemGroup>
 </Project>
