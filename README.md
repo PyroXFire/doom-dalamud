@@ -12,7 +12,9 @@ ImGui texture in the game's own D3D11 device.
 - Autosave: on window close, on plugin unload, on `/doom close`, plus a timer (default 5 min)
 - Autosave is slot 0 (`doomsav0.dsg`) and can be auto-loaded on start ("Continue from autosave")
 - Mouse look, WASD + mouse fire/use, arrows for turning, number keys for weapons
-- 320x200 or 640x400 rendering, in-window scaling
+- 640x400 rendering by default (320x200 available in settings; switching needs an engine restart)
+- Keyboard and mouse via ImGui's input queue, so controls work while FFXIV keeps focus
+- Controller support: the game's own pad state drives Doom
 
 ## What does not work (yet)
 
@@ -23,7 +25,9 @@ ImGui texture in the game's own D3D11 device.
 - **Autosave only in-game.** Saving uses the engine's save action, which only runs during a live level.
   Closing at the title screen or main menu writes nothing (there is no game state to save there).
 - **Linear texture filtering.** Dalamud's ImGui backend samples with a linear filter, so non-integer
-  window scales look slightly soft. Integer scales (3x, 4x) look crisp.
+  window scales look slightly soft. The render is 640x400 by default; enlarging the window past that
+  will smooth it again.
+- **No pitch.** Doom has none; the right stick only turns.
 
 ## Install (plugin repository)
 
@@ -60,6 +64,15 @@ unzip -o DalamudDoom/bin/Release/DalamudDoom/latest.zip -d ~/.xlcore/installedPl
 | Weapons | 1-7 |
 | Menu | Escape, Enter |
 | Automap | Tab |
+
+Controller (uses the game's own pad state, no extra config):
+
+| Action | Binding |
+|---|---|
+| Move / strafe | Left stick |
+| Turn | Right stick |
+| Fire | R2 or A/Cross |
+| Use | X/Square |
 
 Mouse look is on by default and is only active while the cursor is over the Doom window. FFXIV does not
 receive clicks or keystrokes while the Doom window has focus (Dalamud blocks them via
