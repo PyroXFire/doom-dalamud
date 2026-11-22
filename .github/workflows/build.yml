@@ -1,0 +1,55 @@
+name: Build plugin
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Download Dalamud
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile dalamud.zip
+          Expand-Archive dalamud.zip -DestinationPath dalamud
+          "DALAMUD_HOME=${{ github.workspace }}\dalamud" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Build
+        run: dotnet build DalamudDoom/DalamudDoom.csproj -c Release
+
+      - name: Headless engine smoke test
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://github.com/freedoom/freedoom/releases/download/v0.13.0/freedoom-0.13.0.zip -OutFile freedoom.zip
+          Expand-Archive freedoom.zip -DestinationPath freedoom
+          dotnet run --project tests/HeadlessTest -c Release -- freedoom/freedoom-0.13.0/freedoom2.wad --warp
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Stage plugin zip
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Copy-Item DalamudDoom/bin/Release/DalamudDoom/latest.zip dist/DalamudDoom.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DalamudDoom
+          path: dist/DalamudDoom.zip
+
+      - name: Publish release asset
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/DalamudDoom.zip

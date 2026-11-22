@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ManagedDoom</AssemblyName>
+    <RootNamespace>ManagedDoom</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS0162;CS0168;CS0219;CS0414;CS0649;CS8321;CS8618;CS8625</NoWarn>
+  </PropertyGroup>
+
+</Project>

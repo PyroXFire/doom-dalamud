@@ -1,0 +1,18 @@
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
+
+  <PropertyGroup>
+    <AssemblyName>DalamudDoom</AssemblyName>
+    <RootNamespace>DalamudDoom</RootNamespace>
+    <Version>0.1.0.0</Version>
+    <PackageProjectUrl>https://github.com/PyroXFire/doom-dalamud</PackageProjectUrl>
+    <PackageLicenseExpression>GPL-2.0-only</PackageLicenseExpression>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ManagedDoom\ManagedDoom.csproj" />
+    <None Include="DalamudDoom.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

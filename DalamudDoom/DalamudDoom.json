@@ -1,0 +1,28 @@
+{
+  "Name": "Doom in FFXIV",
+  "Author": "Kain",
+  "Punchline": "Rip and tear. Between pulls.",
+  "Description": "A Doom engine embedded in a Dalamud window. Runs the classic engine in-process via ManagedDoom, renders into an ImGui texture, and autosaves when you close the window. Requires your own DOOM.WAD / DOOM2.WAD.",
+  "InternalName": "DalamudDoom",
+  "AssemblyVersion": "0.1.0.0",
+  "TestingAssemblyVersion": "0.1.0.0",
+  "RepoUrl": "https://github.com/PyroXFire/doom-dalamud",
+  "ApplicableVersion": "any",
+  "DalamudApiLevel": 15,
+  "Tags": [
+    "doom",
+    "fun",
+    "minigame"
+  ],
+  "CategoryTags": [
+    "other"
+  ],
+  "IsHide": false,
+  "IsTestingExclusive": false,
+  "LoadPriority": 0,
+  "LoadRequiredState": 0,
+  "LoadSync": false,
+  "CanUnloadAsync": false,
+  "SupportsProfiles": true,
+  "AcceptsFeedback": false
+}
