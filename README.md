@@ -30,7 +30,11 @@ ImGui texture in the game's own D3D11 device.
 1. `/xlsettings` → Experimental → Custom Plugin Repositories
 2. Add: `https://raw.githubusercontent.com/PyroXFire/doom-dalamud/main/repo.json`
 3. `/xlplugins` → search **Doom in FFXIV** → install
-4. `/doom` to open. It scans Steam libraries and common folders for WADs on first run and
+4. Wait for the repo to be fetched — `/xllog`, search `repo`, and you should see
+   `Successfully fetched repo: https://raw.githubusercontent.com/PyroXFire/doom-dalamud/main/repo.json`.
+   If that line never appears, the URL is not in the list: it has to be added with the `+` button and the
+   list saved, or Dalamud never asks for it.
+5. `/doom` to open. It scans Steam libraries and common folders for WADs on first run and
    pre-selects `base/doom2/DOOM2.WAD`, falling back to `base/DOOM.WAD` or Freedoom if that is all
    you have.
 
@@ -72,6 +76,17 @@ receive clicks or keystrokes while the Doom window has focus (Dalamud blocks the
   input capture, settings.
 - `tests/HeadlessTest/` — no-ImGui smoke test: boots the engine on Freedoom II, renders 400 frames,
   writes and reloads a save. Runs in CI.
+
+## Validating releases and repo entries
+
+`tools/RepoCheck` deserializes `repo.json` and a plugin manifest with Dalamud's own `PluginManifest`
+type (loaded from the installed Dalamud), so a broken entry fails locally instead of silently
+disappearing from the plugin list:
+
+```bash
+dotnet run --project tools/RepoCheck -- repo.json DalamudDoom/DalamudDoom.json
+```
+Point it at another Dalamud with `-p:DalamudLib=/path/to/Hooks/dev`.
 
 ## License
 

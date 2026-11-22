@@ -2,9 +2,9 @@
   {
     "Author": "Kain",
     "Name": "Doom in FFXIV",
-    "InternalName": "DalamudDoom",
     "Punchline": "Rip and tear. Between pulls.",
     "Description": "A Doom engine embedded in a Dalamud window. Runs the classic engine in-process via ManagedDoom, renders into an ImGui texture, and autosaves when you close the window. Requires your own DOOM.WAD / DOOM2.WAD. Vanilla-format WADs only.",
+    "Changelog": "- First release: ManagedDoom engine in a Dalamud window, autosave on close, Steam WAD auto-detect.",
     "Tags": [
       "doom",
       "fun",
@@ -13,17 +13,29 @@
     "CategoryTags": [
       "other"
     ],
-    "AssemblyVersion": "0.1.0.3",
-    "DalamudApiLevel": 15,
-    "ApplicableVersion": "any",
-    "RepoUrl": "https://github.com/PyroXFire/doom-dalamud",
     "IsHide": false,
-    "IsTestingExclusive": false,
-    "LoadPriority": 0,
+    "InternalName": "DalamudDoom",
+    "AssemblyVersion": "0.1.0.3",
+    "TestingAssemblyVersion": null,
+    "RepoUrl": "https://github.com/PyroXFire/doom-dalamud",
+    "ApplicableVersion": "any",
+    "MinimumDalamudVersion": null,
+    "DalamudApiLevel": 15,
+    "TestingDalamudApiLevel": null,
     "DownloadCount": 0,
     "LastUpdate": 0,
     "DownloadLinkInstall": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.3/DalamudDoom.zip",
     "DownloadLinkUpdate": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.3/DalamudDoom.zip",
-    "AcceptsFeedback": false
+    "DownloadLinkTesting": null,
+    "LoadRequiredState": 0,
+    "LoadSync": false,
+    "LoadPriority": 0,
+    "CanUnloadAsync": false,
+    "SupportsProfiles": true,
+    "ImageUrls": null,
+    "IconUrl": null,
+    "AcceptsFeedback": false,
+    "FeedbackMessage": null,
+    "IsTestingExclusive": false
   }
 ]
