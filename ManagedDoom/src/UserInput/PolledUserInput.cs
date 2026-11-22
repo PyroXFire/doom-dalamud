@@ -169,9 +169,16 @@ namespace ManagedDoom.UserInput
                 }
             }
 
-            if (useMouse && mouseGrabbed)
+            if (useMouse)
             {
+                // Always drain the accumulated delta, otherwise it piles up while the
+                // engine is in a menu and jumps the view when the mouse is grabbed again.
                 var delta = takeMouseDelta();
+                if (!mouseGrabbed)
+                {
+                    delta = Vector2.Zero;
+                }
+
                 var ms = 0.5F * config.mouse_sensitivity;
                 var mx = (int)MathF.Round(ms * delta.X);
                 var my = (int)MathF.Round(ms * -delta.Y);

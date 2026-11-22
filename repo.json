@@ -13,7 +13,7 @@
     "CategoryTags": [
       "other"
     ],
-    "AssemblyVersion": "0.1.0.1",
+    "AssemblyVersion": "0.1.0.2",
     "DalamudApiLevel": 15,
     "ApplicableVersion": "any",
     "RepoUrl": "https://github.com/PyroXFire/doom-dalamud",
@@ -22,8 +22,8 @@
     "LoadPriority": 0,
     "DownloadCount": 0,
     "LastUpdate": 0,
-    "DownloadLinkInstall": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.1/DalamudDoom.zip",
-    "DownloadLinkUpdate": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.1/DalamudDoom.zip",
+    "DownloadLinkInstall": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.2/DalamudDoom.zip",
+    "DownloadLinkUpdate": "https://github.com/PyroXFire/doom-dalamud/releases/download/v0.1.0.2/DalamudDoom.zip",
     "AcceptsFeedback": false
   }
 ]
